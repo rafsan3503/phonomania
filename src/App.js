@@ -1,10 +1,12 @@
 import "./App.css";
 import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
+import router from "./Routes/routes";
 
 function App() {
   return (
     <div className="container mx-auto">
-      <button className="btn btn-primary">Buy Now</button>
+      <RouterProvider router={router}></RouterProvider>
       <Toaster />
     </div>
   );
