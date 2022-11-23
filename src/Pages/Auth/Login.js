@@ -1,15 +1,39 @@
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
+import { AuthContext } from "../../AuthProvider/UserContext";
 
 const Login = () => {
+  // get functions from context
+  const { googleLogin, twitterLogin, loginUser } = useContext(AuthContext);
   // log in with email and password
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    loginUser(email, password)
+      .then((res) => {
+        toast.success("Login Success");
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
+  // google Login
+  const handleGoogle = () => {
+    googleLogin().then((res) => {
+      toast.success("Google Log in success");
+    });
+  };
+
+  // twitter Login
+
+  const handleTwitter = () => {
+    console.log("clicked");
+    twitterLogin().then((res) => {
+      toast.success("Twitter Log in success");
+    });
   };
   return (
     <section class="bg-white dark:bg-gray-900">
@@ -108,6 +132,7 @@ const Login = () => {
 
             <div class="flex items-center mt-6 -mx-2">
               <button
+                onClick={handleGoogle}
                 type="button"
                 class="flex items-center justify-center w-full px-6 py-2 mx-2 text-sm font-medium text-white transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:bg-blue-400 focus:outline-none"
               >
@@ -119,7 +144,7 @@ const Login = () => {
               </button>
 
               <Link
-                href="#"
+                onClick={handleTwitter}
                 class="p-2 mx-2 text-sm font-medium text-gray-500 transition-colors duration-300 transform bg-gray-300 rounded-md hover:bg-gray-200"
               >
                 <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
