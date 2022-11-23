@@ -6,7 +6,9 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   TwitterAuthProvider,
+  updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
@@ -55,11 +57,33 @@ const UserContext = ({ children }) => {
   const twitterLogin = () => {
     return signInWithPopup(auth, twitterProvider);
   };
+
+  // updateUser
+  const updateUser = (name, image) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: image,
+    });
+  };
+
+  // log out
+  const logOut = () => {
+    return signOut();
+  };
   // value wrapper
-  const authInfo = { user, loading };
+  const authInfo = {
+    user,
+    loading,
+    createUser,
+    loginUser,
+    googleLogin,
+    twitterLogin,
+    updateUser,
+    logOut,
+  };
   return (
     <div>
-      <AuthContext.Provider>{children}</AuthContext.Provider>
+      <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
     </div>
   );
 };
