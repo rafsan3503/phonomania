@@ -6,10 +6,10 @@ const Navbar = () => {
   const menuItems = (
     <>
       <li>
-        <Link>Home</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link>Blogs</Link>
+        <Link to="/blogs">Blogs</Link>
       </li>
     </>
   );
@@ -48,7 +48,9 @@ const Navbar = () => {
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
       <div className="navbar-end">
-        <Link className="btn btn-primary">Login</Link>
+        <Link to="/login" className="btn btn-primary">
+          Login
+        </Link>
       </div>
     </div>
   );
