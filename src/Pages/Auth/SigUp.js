@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
+import { AuthContext } from "../../AuthProvider/UserContext";
 
 const SigUp = () => {
+  // get functions from context
+  const { googleLogin, updateUser, twitterLogin, createUser } =
+    useContext(AuthContext);
   // create user with email and password
   const handleSignup = (event) => {
     event.preventDefault();
@@ -14,10 +18,26 @@ const SigUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const confirm = form.confirm.value;
+
+    // create form Data
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const url = `https://api.imgbb.com/1/key=${process.env.REACT_APP_IMG_API}`;
+
     if (password !== confirm) {
       return toast.error("Password does not match");
     }
-    console.log(name, image, role, email, password, confirm);
+
+    // post image to imgbb
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((image) => {
+        console.log(image.data.url);
+      });
   };
   return (
     <section class="bg-white dark:bg-gray-900">
