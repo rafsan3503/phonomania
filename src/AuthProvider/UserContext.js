@@ -73,6 +73,7 @@ const UserContext = ({ children }) => {
   // log out
   const logOut = () => {
     setLoading(true);
+    localStorage.removeItem("token");
     return signOut(auth);
   };
   // value wrapper

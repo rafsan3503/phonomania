@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { AuthContext } from "../../AuthProvider/UserContext";
+import { setToken } from "../../Utility/setToken";
 
 const Login = () => {
   // get functions from context
@@ -20,8 +21,14 @@ const Login = () => {
     const password = form.password.value;
     loginUser(email, password)
       .then((res) => {
-        navigate(from, { replace: true });
+        const user = {
+          email: res.user.email,
+          role: "buyer",
+        };
+
+        setToken(user);
         toast.success("Login Success");
+        navigate(from, { replace: true });
       })
       .catch((err) => toast.error(err.message));
   };
@@ -29,6 +36,12 @@ const Login = () => {
   // google Login
   const handleGoogle = () => {
     googleLogin().then((res) => {
+      const user = {
+        email: res.user.email,
+        role: "buyer",
+      };
+
+      setToken(user);
       navigate(from, { replace: true });
       toast.success("Google Log in success");
     });
@@ -37,8 +50,13 @@ const Login = () => {
   // twitter Login
 
   const handleTwitter = () => {
-    console.log("clicked");
     twitterLogin().then((res) => {
+      const user = {
+        email: res.user.email,
+        role: "buyer",
+      };
+
+      setToken(user);
       toast.success("Twitter Log in success");
       navigate(from, { replace: true });
     });
