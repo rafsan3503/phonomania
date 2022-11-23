@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
+import { AuthContext } from "../../AuthProvider/UserContext";
 
 const Navbar = () => {
+  // get user from context
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+
+  // logOut
+  const handleLogout = () => {
+    logOut().then((res) => {
+      toast.success("log out success");
+    });
+  };
   const menuItems = (
     <>
       <li>
@@ -48,9 +60,29 @@ const Navbar = () => {
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login" className="btn btn-primary">
-          Login
-        </Link>
+        {user ? (
+          <>
+            <div class="avatar online mr-5">
+              <div class="w-20 rounded-full">
+                <img
+                  src={
+                    user?.photoURL
+                      ? user.photoURL
+                      : "https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png"
+                  }
+                  alt=""
+                />
+              </div>
+            </div>
+            <Link onClick={handleLogout} className="btn btn-sm">
+              Log out
+            </Link>
+          </>
+        ) : (
+          <Link to="/login" className="btn btn-primary">
+            Log In
+          </Link>
+        )}
       </div>
     </div>
   );
