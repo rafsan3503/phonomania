@@ -1,12 +1,17 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { AuthContext } from "../../AuthProvider/UserContext";
 
 const Login = () => {
   // get functions from context
   const { googleLogin, twitterLogin, loginUser } = useContext(AuthContext);
+  // location and from
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  console.log(from);
+  const navigate = useNavigate();
   // log in with email and password
   const handleLogin = (event) => {
     event.preventDefault();
@@ -15,6 +20,7 @@ const Login = () => {
     const password = form.password.value;
     loginUser(email, password)
       .then((res) => {
+        navigate(from, { replace: true });
         toast.success("Login Success");
       })
       .catch((err) => toast.error(err.message));
@@ -23,6 +29,7 @@ const Login = () => {
   // google Login
   const handleGoogle = () => {
     googleLogin().then((res) => {
+      navigate(from, { replace: true });
       toast.success("Google Log in success");
     });
   };
@@ -33,6 +40,7 @@ const Login = () => {
     console.log("clicked");
     twitterLogin().then((res) => {
       toast.success("Twitter Log in success");
+      navigate(from, { replace: true });
     });
   };
   return (

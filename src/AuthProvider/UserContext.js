@@ -40,21 +40,25 @@ const UserContext = ({ children }) => {
 
   // create user
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // login user
   const loginUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // google logIn
   const googleLogin = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
   // twitter login
   const twitterLogin = () => {
+    setLoading(true);
     return signInWithPopup(auth, twitterProvider);
   };
 
@@ -68,7 +72,8 @@ const UserContext = ({ children }) => {
 
   // log out
   const logOut = () => {
-    return signOut();
+    setLoading(true);
+    return signOut(auth);
   };
   // value wrapper
   const authInfo = {

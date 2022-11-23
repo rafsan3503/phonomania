@@ -6,6 +6,7 @@ import SigUp from "../Pages/Auth/SigUp";
 import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
 import ErrorPage from "../Pages/Shared/ErrorPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/blogs",
-        element: <Blogs />,
+        element: (
+          <PrivateRoutes>
+            <Blogs />
+          </PrivateRoutes>
+        ),
       },
     ],
   },
