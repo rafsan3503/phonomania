@@ -22,7 +22,7 @@ const Navbar = () => {
       </li>
       {user && (
         <li>
-          <Link to="/">Dashboard</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </li>
       )}
       <li>
@@ -49,6 +49,12 @@ const Navbar = () => {
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
+          </label>
+          <label
+            htmlFor="my-drawer-2"
+            className="btn btn-primary drawer-button lg:hidden"
+          >
+            Open drawer
           </label>
           <ul
             tabIndex={0}
