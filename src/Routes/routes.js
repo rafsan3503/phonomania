@@ -6,7 +6,9 @@ import Login from "../Pages/Auth/Login";
 import SigUp from "../Pages/Auth/SigUp";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyer from "../Pages/Dashboard/AllBuyer/AllBuyer";
+import AllSeller from "../Pages/Dashboard/AllSeller/AllSeller";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
+import CategoriesProduct from "../Pages/Home/CategoriesProduct";
 import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
 import ErrorPage from "../Pages/Shared/ErrorPage";
@@ -24,11 +26,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/blogs",
-        element: (
-          <PrivateRoutes>
-            <Blogs />
-          </PrivateRoutes>
-        ),
+        element: <Blogs />,
+      },
+      {
+        path: "/categories/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/categories/${params.id}`),
+        element: <CategoriesProduct></CategoriesProduct>,
       },
     ],
   },
@@ -48,7 +52,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoutes>
+        <DashboardLayout />
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -61,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/allbuyer",
         element: <AllBuyer />,
+      },
+      {
+        path: "/dashboard/allseller",
+        element: <AllSeller />,
       },
     ],
   },

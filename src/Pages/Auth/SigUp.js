@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { AuthContext } from "../../AuthProvider/UserContext";
+import { setToken } from "../../Utility/setToken";
 
 const SigUp = () => {
   // get functions from context
@@ -42,6 +43,11 @@ const SigUp = () => {
             // update user
             updateUser(name, img)
               .then(() => {
+                const user = {
+                  email,
+                  role,
+                };
+                setToken(user);
                 toast.success("User Created successfully");
               })
               .catch((err) => toast.error(err.message));
@@ -54,6 +60,11 @@ const SigUp = () => {
   const handleGoogle = () => {
     googleLogin()
       .then((res) => {
+        const user = {
+          email: res.user.email,
+          role: "buyer",
+        };
+        setToken(user);
         toast.success("Google Log in success");
       })
       .catch((err) => toast.error(err.message));
@@ -63,6 +74,12 @@ const SigUp = () => {
   const handleTwitter = () => {
     twitterLogin()
       .then((res) => {
+        const email = `${res.user.uid}@gmail.com`;
+        const user = {
+          email,
+          role: "buyer",
+        };
+        setToken(user);
         toast.success("Twitter Log in success");
       })
       .catch((err) => toast.error(err.message));
@@ -158,7 +175,9 @@ const SigUp = () => {
             <option selected class="mx-3 text-gray-400">
               Seller
             </option>
-            <option class="mx-3 text-gray-400">Buyer</option>
+            <option selected class="mx-3 text-gray-400">
+              Buyer
+            </option>
           </select>
 
           <div class="relative flex items-center mt-6">

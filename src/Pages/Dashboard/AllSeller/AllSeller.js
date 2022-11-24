@@ -2,20 +2,20 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../../Shared/Loading";
+import toast from "react-hot-toast";
 
-const AllBuyer = () => {
-  // get buyers using react query
+const AllSeller = () => {
+  // get all seller
   const {
-    data: buyers = [],
+    data: sellers = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["buyers"],
+    queryKey: ["sellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/buyers").then((res) => res.json()),
+      fetch("http://localhost:5000/sellers").then((res) => res.json()),
   });
-  //   delete buyer
-  const handleDelete = (buyer) => {
+  const handleDelete = (seller) => {
     Swal.fire({
       title: `Are you sure you want to delete?`,
       text: "You won't be able to revert this!",
@@ -26,7 +26,7 @@ const AllBuyer = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/buyers/${buyer._id}`, {
+        fetch(`http://localhost:5000/sellers/${seller._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -38,6 +38,20 @@ const AllBuyer = () => {
           });
       }
     });
+  };
+
+  // verify seller
+  const handleVerify = (_id) => {
+    fetch(`http://localhost:5000/sellers/${_id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          refetch();
+          toast.success("User is verified now!!");
+        }
+      });
   };
 
   if (isLoading) {
@@ -56,14 +70,21 @@ const AllBuyer = () => {
             </tr>
           </thead>
           <tbody>
-            {buyers.map((buyer) => (
+            {sellers.map((seller) => (
               <tr>
                 <th>1</th>
-                <td>{buyer.email}</td>
-                <td>Quality Control Specialist</td>
+                <td>{seller.email}</td>
                 <td>
                   <button
-                    onClick={() => handleDelete(buyer)}
+                    onClick={() => handleVerify(seller._id)}
+                    className="btn btn-success btn-xs"
+                  >
+                    {seller.verified ? "verified" : "verify"}
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(seller)}
                     className="btn btn-xs btn-error"
                   >
                     Delete
@@ -78,4 +99,4 @@ const AllBuyer = () => {
   );
 };
 
-export default AllBuyer;
+export default AllSeller;

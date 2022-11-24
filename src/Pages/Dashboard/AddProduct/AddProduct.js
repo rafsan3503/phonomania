@@ -1,21 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../../AuthProvider/UserContext";
+import { useQuery } from "@tanstack/react-query";
 
 const AddProduct = () => {
   // get user data
   const { user } = useContext(AuthContext);
+
+  // get categories
+  const {
+    data: categories = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () =>
+      fetch("http://localhost:5000/categories").then((res) => res.json()),
+  });
+
   // product add
   const handleAddProduct = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const price = form.price.value;
+    const location = form.location.value;
     const condition = form.condition.value;
     const purchaseYear = form.purchase.value;
     const phone = form.phone.value;
     const description = form.description.value;
     const image = form.image.files[0];
+    const category = form.category.value;
+    const model = form.model.value;
+    const originalPrice = form.originalPrice.value;
+    const usageYears = form.usageYear.value;
+
+    const selectedCategory = categories.find((item) => item.name === category);
+    const categoryId = selectedCategory._id;
 
     // create form data
     const formData = new FormData();
@@ -31,19 +52,31 @@ const AddProduct = () => {
       .then((res) => res.json())
       .then((image) => {
         const img = image.data.url;
+        const date = new Date();
         const product = {
           name,
           img,
           price,
+          originalPrice,
+          model,
           purchaseYear,
           phone,
           condition,
+          location,
           description,
           seller: user.displayName,
           sellerId: user.uid,
-          category: "android",
-          categoryId: user.uid,
+          sellerEmail: user.email,
+          category,
+          categoryId,
+          salesStatus: "available",
+          advertisement: false,
+          usageYears,
+          postTime: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+          postDate: date.toDateString(),
         };
+
+        console.log(product.postTime);
 
         // post product to database
         fetch("http://localhost:5000/products", {
@@ -60,23 +93,13 @@ const AddProduct = () => {
             }
           });
       });
-
-    console.log(
-      name,
-      price,
-      condition,
-      purchaseYear,
-      phone,
-      description,
-      image
-    );
   };
   return (
-    <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md  mt-20">
-      <h2 class="text-lg font-semibold text-gray-700">Add a product</h2>
+    <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md  mt-20">
+      <h2 className="text-lg font-semibold text-gray-700">Add a product</h2>
 
       <form onSubmit={handleAddProduct}>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label htmlFor="">Name</label>
             <input
@@ -85,6 +108,17 @@ const AddProduct = () => {
               required
               className="input input-bordered w-full"
               name="name"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="">Model</label>
+            <input
+              type="text"
+              required
+              placeholder="Model"
+              className="input input-bordered w-full"
+              name="model"
             />
           </div>
 
@@ -100,6 +134,28 @@ const AddProduct = () => {
           </div>
 
           <div>
+            <label htmlFor="">Original Price</label>
+            <input
+              type="text"
+              required
+              placeholder="Original Price"
+              className="input input-bordered w-full"
+              name="originalPrice"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="">Year of use</label>
+            <input
+              type="text"
+              required
+              placeholder="Year of use"
+              className="input input-bordered w-full"
+              name="usageYear"
+            />
+          </div>
+
+          <div>
             <label htmlFor="">Condition</label>
             <select
               required
@@ -110,6 +166,29 @@ const AddProduct = () => {
               <option>Medium</option>
               <option>Bad</option>
             </select>
+          </div>
+          <div>
+            <label htmlFor="category">Category</label>
+            <select
+              required
+              className="select select-bordered w-full"
+              name="category"
+            >
+              {categories.map((category) => (
+                <option key={category._id}>{category.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="">Location</label>
+            <input
+              type="text"
+              required
+              placeholder="Location"
+              className="input input-bordered w-full"
+              name="location"
+            />
           </div>
 
           <div>
@@ -133,18 +212,17 @@ const AddProduct = () => {
               name="purchase"
             />
           </div>
-
-          <div>
-            <label htmlFor="">Photo Url</label>
-            <input
-              type="file"
-              required
-              placeholder="Photo Url"
-              accept="image/*"
-              className="file-input file-input-bordered w-full"
-              name="image"
-            />
-          </div>
+        </div>
+        <div>
+          <label htmlFor="">Photo Url</label>
+          <input
+            type="file"
+            required
+            placeholder="Photo Url"
+            accept="image/*"
+            className="file-input file-input-bordered w-full"
+            name="image"
+          />
         </div>
         <div className="mt-5">
           <label htmlFor="">Description</label>
@@ -156,8 +234,8 @@ const AddProduct = () => {
           ></textarea>
         </div>
 
-        <div class="flex justify-end mt-6">
-          <button type="submit" class="btn btn-primary">
+        <div className="flex justify-end mt-6">
+          <button type="submit" className="btn btn-primary">
             Add
           </button>
         </div>
