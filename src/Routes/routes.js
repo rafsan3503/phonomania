@@ -5,6 +5,7 @@ import Main from "../Layouts/Main";
 import Login from "../Pages/Auth/Login";
 import SigUp from "../Pages/Auth/SigUp";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
+import AllBuyer from "../Pages/Dashboard/AllBuyer/AllBuyer";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/addproduct",
         element: <AddProduct />,
+      },
+      {
+        path: "/dashboard/allbuyer",
+        element: <AllBuyer />,
       },
     ],
   },
