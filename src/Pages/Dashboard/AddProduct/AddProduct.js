@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../../AuthProvider/UserContext";
 
 const AddProduct = () => {
+  // get user data
+  const { user } = useContext(AuthContext);
   // product add
   const handleAddProduct = (event) => {
     event.preventDefault();
@@ -27,6 +31,34 @@ const AddProduct = () => {
       .then((res) => res.json())
       .then((image) => {
         const img = image.data.url;
+        const product = {
+          name,
+          img,
+          price,
+          purchaseYear,
+          phone,
+          condition,
+          description,
+          seller: user.displayName,
+          sellerId: user.uid,
+          category: "android",
+          categoryId: user.uid,
+        };
+
+        // post product to database
+        fetch("http://localhost:5000/products", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(product),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.acknowledged) {
+              toast.success("product added successfully!");
+            }
+          });
       });
 
     console.log(
