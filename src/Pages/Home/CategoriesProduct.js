@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/UserContext";
 
 const CategoriesProduct = () => {
   const products = useLoaderData();
+  const { user } = useContext(AuthContext);
+  const [verified, setVerified] = useState(false);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/verify?email=${user.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.isVerified) {
+          setVerified(true);
+        }
+      });
+  }, [user.email]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2">
@@ -30,6 +44,9 @@ const CategoriesProduct = () => {
               <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 {product.description}
               </p>
+              <p>{product.location}</p>
+              <p>{product.price}</p>
+              <p>{product.originalPrice}</p>
             </div>
 
             <div class="mt-4">
@@ -50,7 +67,7 @@ const CategoriesProduct = () => {
                   </a>
                 </div>
                 <span class="mx-1 text-xs text-gray-600 dark:text-gray-300">
-                  {product.postTime.slice(0, 10)} {product.postTime.getSeconds}
+                  {product.postTime} {product.postDate}
                 </span>
               </div>
             </div>
