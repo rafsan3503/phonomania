@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../AuthProvider/UserContext";
 
-const BookModal = ({ product }) => {
+const BookModal = ({ product, setOpenModal }) => {
   const { user } = useContext(AuthContext);
   const handleBooking = (event) => {
     event.preventDefault();
@@ -20,9 +20,29 @@ const BookModal = ({ product }) => {
       email,
       phone,
       location,
+      productImg: product.img,
+      productId: product._id,
     };
 
-    console.log(booking);
+    fetch("http://localhost:5000/orders", {
+      method: "Post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.acknowledged) {
+          setOpenModal(false);
+          toast.success("Booking Successful");
+          return;
+        }
+        if (data.error) {
+          toast.error(data.message);
+          setOpenModal(false);
+        }
+      });
   };
   return (
     <div>

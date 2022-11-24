@@ -5,6 +5,7 @@ import BookModal from "../Shared/BookModal";
 
 const ProductCard = ({ product }) => {
   const [verified, setVerified] = useState(false);
+  const [openModal, setOpenModal] = useState(true);
   useEffect(() => {
     fetch(`http://localhost:5000/verify?email=${product?.sellerEmail}`)
       .then((res) => res.json())
@@ -70,7 +71,9 @@ const ProductCard = ({ product }) => {
               {product.postTime} {product.postDate}
             </span>
           </div>
-          <BookModal product={product} />
+          {openModal && (
+            <BookModal product={product} setOpenModal={setOpenModal} />
+          )}
         </div>
       </div>
     </div>
