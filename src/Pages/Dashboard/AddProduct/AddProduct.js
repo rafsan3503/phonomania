@@ -67,6 +67,7 @@ const AddProduct = () => {
           seller: user.displayName,
           sellerId: user.uid,
           sellerEmail: user.email,
+          sellerImage: user.photoURL,
           category,
           categoryId,
           salesStatus: "available",
