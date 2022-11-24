@@ -1,63 +1,132 @@
 import React from "react";
 
 const AddProduct = () => {
+  // product add
+  const handleAddProduct = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const price = form.price.value;
+    const condition = form.condition.value;
+    const purchaseYear = form.purchase.value;
+    const phone = form.phone.value;
+    const description = form.description.value;
+    const image = form.image.files[0];
+
+    // create form data
+    const formData = new FormData();
+    formData.append("image", image);
+
+    // add img to imgbb
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_API}`;
+
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((image) => {
+        const img = image.data.url;
+      });
+
+    console.log(
+      name,
+      price,
+      condition,
+      purchaseYear,
+      phone,
+      description,
+      image
+    );
+  };
   return (
     <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md  mt-20">
       <h2 class="text-lg font-semibold text-gray-700">Add a product</h2>
 
-      <form>
+      <form onSubmit={handleAddProduct}>
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="username">
-              Name
-            </label>
+            <label htmlFor="">Name</label>
             <input
               type="text"
+              placeholder="Name"
+              required
+              className="input input-bordered w-full"
               name="name"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="emailAddress">
-              Price
-            </label>
+            <label htmlFor="">Price</label>
             <input
               type="text"
+              required
+              placeholder="Price"
+              className="input input-bordered w-full"
               name="price"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
 
           <div>
-            <label class="text-gray-700 dark:text-gray-200" for="password">
-              Condition
-            </label>
-            <input
-              id="password"
-              type="password"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-            />
-          </div>
-
-          <div>
-            <label
-              class="text-gray-700 dark:text-gray-200"
-              for="passwordConfirmation"
+            <label htmlFor="">Condition</label>
+            <select
+              required
+              className="select select-bordered w-full"
+              name="condition"
             >
-              Phone Number
-            </label>
+              <option>Good</option>
+              <option>Medium</option>
+              <option>Bad</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="">Phone Number</label>
             <input
               type="tel"
+              required
+              placeholder="Phone Number"
+              className="input input-bordered w-full"
               name="phone"
-              class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="">Purchase Year</label>
+            <input
+              type="date"
+              required
+              placeholder="Purchase Year"
+              className="input input-bordered w-full"
+              name="purchase"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="">Photo Url</label>
+            <input
+              type="file"
+              required
+              placeholder="Photo Url"
+              accept="image/*"
+              className="file-input file-input-bordered w-full"
+              name="image"
             />
           </div>
         </div>
+        <div className="mt-5">
+          <label htmlFor="">Description</label>
+          <textarea
+            required
+            className="textarea textarea-bordered w-full"
+            placeholder="Description"
+            name="description"
+          ></textarea>
+        </div>
 
         <div class="flex justify-end mt-6">
-          <button class="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-            Save
+          <button type="submit" class="btn btn-primary">
+            Add
           </button>
         </div>
       </form>
