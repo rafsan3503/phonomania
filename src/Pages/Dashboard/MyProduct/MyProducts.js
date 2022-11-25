@@ -31,7 +31,8 @@ const MyProducts = () => {
       confirmButtonText: "Yes, Advertise it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:5000/products/${id}`).then((res) => {
+        axios.put(`http://localhost:5000/advertised/${id}`).then((res) => {
+          console.log(res.data);
           refetch();
         });
         Swal.fire("Advertised!", "Your Product is Live now.", "success");
@@ -81,11 +82,12 @@ const MyProducts = () => {
                   <td>
                     <button
                       onClick={() => handleAdvertise(product._id)}
+                      disabled={product?.advertisement}
                       className={`btn btn-secondary btn-xs ${
                         product.advertisement && "btn-success text-white"
                       }`}
                     >
-                      {product.advertisement
+                      {product?.advertisement
                         ? "Advertised"
                         : "Advertise Product"}
                     </button>

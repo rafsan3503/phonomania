@@ -15,7 +15,9 @@ import CategoriesProduct from "../Pages/Home/CategoriesProduct";
 import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
 import ErrorPage from "../Pages/Shared/ErrorPage";
+import AdminRoutes from "./AdminRoutes";
 import PrivateRoutes from "./PrivateRoutes";
+import SellerRoutes from "./SellerRoutes";
 
 const router = createBrowserRouter([
   {
@@ -77,23 +79,43 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/myproducts",
-        element: <MyProducts />,
+        element: (
+          <SellerRoutes>
+            <MyProducts />
+          </SellerRoutes>
+        ),
       },
       {
         path: "/dashboard/addproduct",
-        element: <AddProduct />,
+        element: (
+          <SellerRoutes>
+            <AddProduct />
+          </SellerRoutes>
+        ),
       },
       {
         path: "/dashboard/allbuyer",
-        element: <AllBuyer />,
+        element: (
+          <AdminRoutes>
+            <AllBuyer />
+          </AdminRoutes>
+        ),
       },
       {
         path: "/dashboard/allseller",
-        element: <AllSeller />,
+        element: (
+          <AdminRoutes>
+            <AllSeller />
+          </AdminRoutes>
+        ),
       },
       {
         path: "/dashboard/reportedItems",
-        element: <ReportedItems />,
+        element: (
+          <AdminRoutes>
+            <ReportedItems />
+          </AdminRoutes>
+        ),
       },
     ],
   },
