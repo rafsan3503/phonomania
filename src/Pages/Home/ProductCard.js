@@ -79,14 +79,15 @@ const ProductCard = ({ product }) => {
                 }
                 alt="Avatar"
               />
-              {verified && <GoVerified className="text-blue-500" />}
+
               <Link
                 href="#"
-                class="mx-2 font-semibold text-gray-700 dark:text-gray-200"
+                class="mx-2 font-semibold text-gray-700 flex items-center"
                 tabindex="0"
                 role="link"
               >
-                {product.seller}
+                {product.seller}{" "}
+                {verified && <GoVerified className="text-blue-500" />}
               </Link>
             </div>
             <span class="mx-1 text-xs text-gray-600 dark:text-gray-300">

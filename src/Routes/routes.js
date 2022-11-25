@@ -10,6 +10,7 @@ import AllSeller from "../Pages/Dashboard/AllSeller/AllSeller";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import Payments from "../Pages/Dashboard/MyOrders/Payments";
 import MyProducts from "../Pages/Dashboard/MyProduct/MyProducts";
+import ReportedItems from "../Pages/Dashboard/ReportedItems/ReportedItems";
 import CategoriesProduct from "../Pages/Home/CategoriesProduct";
 import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/allseller",
         element: <AllSeller />,
+      },
+      {
+        path: "/dashboard/reportedItems",
+        element: <ReportedItems />,
       },
     ],
   },

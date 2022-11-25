@@ -77,6 +77,7 @@ const AddProduct = () => {
           categoryId,
           salesStatus: "available",
           advertisement: false,
+          report: false,
           usageYears,
           postTime: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
           postDate: date.toDateString(),

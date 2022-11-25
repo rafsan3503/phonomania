@@ -6,18 +6,21 @@ import Loading from "../../Shared/Loading";
 
 const MyOrders = () => {
   // get user from context
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   // get orders
-  const {
-    data: orders = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: orders = [], isLoading } = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      fetch(`http://localhost:5000/orders?email=${user?.email}`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+        }
+        return res.json();
+      }),
   });
   // loader
   if (isLoading) {
