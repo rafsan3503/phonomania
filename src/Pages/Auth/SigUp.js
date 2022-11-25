@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { AuthContext } from "../../AuthProvider/UserContext";
-import { setToken } from "../../Utility/setToken";
 
 const SigUp = () => {
   // get functions from context
   const { googleLogin, updateUser, twitterLogin, createUser } =
     useContext(AuthContext);
+
+  // get location and navigate
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   // create user with email and password
   const handleSignup = (event) => {
     event.preventDefault();
@@ -47,7 +51,18 @@ const SigUp = () => {
                   email,
                   role,
                 };
-                setToken(user);
+                fetch("http://localhost:5000/users", {
+                  method: "POST",
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                  body: JSON.stringify(user),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    localStorage.setItem("token", data.token);
+                    navigate(from, { replace: true });
+                  });
                 toast.success("User Created successfully");
               })
               .catch((err) => toast.error(err.message));
@@ -64,7 +79,18 @@ const SigUp = () => {
           email: res.user.email,
           role: "buyer",
         };
-        setToken(user);
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("token", data.token);
+            navigate(from, { replace: true });
+          });
         toast.success("Google Log in success");
       })
       .catch((err) => toast.error(err.message));
@@ -79,7 +105,18 @@ const SigUp = () => {
           email,
           role: "buyer",
         };
-        setToken(user);
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("token", data.token);
+            navigate(from, { replace: true });
+          });
         toast.success("Twitter Log in success");
       })
       .catch((err) => toast.error(err.message));

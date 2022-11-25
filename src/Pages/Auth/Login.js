@@ -25,10 +25,20 @@ const Login = () => {
           email: res.user.email,
           role: "buyer",
         };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("token", data.token);
+            navigate(from, { replace: true });
+          });
 
-        setToken(user);
         toast.success("Login Success");
-        navigate(from, { replace: true });
       })
       .catch((err) => toast.error(err.message));
   };
@@ -41,8 +51,20 @@ const Login = () => {
         role: "Buyer",
       };
 
-      setToken(user);
-      navigate(from, { replace: true });
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          localStorage.setItem("token", data.token);
+          navigate(from, { replace: true });
+        });
+
+      setToken(user, navigate(from, { replace: true }));
       toast.success("Google Log in success");
     });
   };
@@ -56,9 +78,19 @@ const Login = () => {
         role: "Buyer",
       };
 
-      setToken(user);
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          localStorage.setItem("token", data.token);
+          navigate(from, { replace: true });
+        });
       toast.success("Twitter Log in success");
-      navigate(from, { replace: true });
     });
   };
   return (
