@@ -50,6 +50,7 @@ const Checkout = ({ booking }) => {
     if (error) {
       console.log("[error]", error);
       setCardError(error.message);
+      setLoading(false);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       setCardError("");
@@ -68,6 +69,7 @@ const Checkout = ({ booking }) => {
 
     if (confirmError) {
       setCardError(confirmError.message);
+      setLoading(false);
       return;
     }
 
@@ -117,7 +119,7 @@ const Checkout = ({ booking }) => {
         />
         <button
           type="submit"
-          className="btn btn-secondary text-white btn-sm mt-5"
+          className="btn btn-primary w-full text-white btn-sm mt-5"
           disabled={!stripe || !clientSecret || loading}
         >
           {loading ? <SmallLoading /> : "Pay"}

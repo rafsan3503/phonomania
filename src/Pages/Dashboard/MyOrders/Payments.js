@@ -11,17 +11,23 @@ const Payments = () => {
   return (
     <div>
       <div>
-        <h2 className="text-xl font-bold p-5">
-          Payment for {booking.treatMent}
-        </h2>
-        <p>
-          Please Pay
-          {booking.price} for your Booking on {booking.name} at{" "}
-        </p>
-        <div className="w-96 p-10">
-          <Elements stripe={stripePromise}>
-            <Checkout booking={booking} />
-          </Elements>
+        <div className="card w-1/2 mx-auto glass mt-16 shadow-xl">
+          <figure className="px-5 pt-10">
+            <img
+              src={booking.productImg}
+              alt="product"
+              className="rounded-xl w-96"
+            />
+          </figure>
+          <div className="card-body items-center text-center">
+            <h2 className="text-xl font-medium">Payment for {booking.name}</h2>
+            <p>Please pay ${booking.price} to get your product</p>
+            <div className="w-full p-10">
+              <Elements stripe={stripePromise}>
+                <Checkout booking={booking} />
+              </Elements>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -46,8 +46,9 @@ const BookModal = ({ product, setOpenModal }) => {
   };
   return (
     <div>
-      <div className="modal" id="my-modal-2">
-        <div className="modal-box">
+      <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+      <label htmlFor="my-modal-4" className="modal cursor-pointer">
+        <label className="modal-box relative" htmlFor="">
           <h3 className="font-bold text-lg">
             Add information to book {product.name}
           </h3>
@@ -102,8 +103,8 @@ const BookModal = ({ product, setOpenModal }) => {
               />
             </div>
           </form>
-        </div>
-      </div>
+        </label>
+      </label>
     </div>
   );
 };

@@ -38,7 +38,7 @@ const Login = () => {
     googleLogin().then((res) => {
       const user = {
         email: res.user.email,
-        role: "buyer",
+        role: "Buyer",
       };
 
       setToken(user);
@@ -53,7 +53,7 @@ const Login = () => {
     twitterLogin().then((res) => {
       const user = {
         email: res.user.email,
-        role: "buyer",
+        role: "Buyer",
       };
 
       setToken(user);

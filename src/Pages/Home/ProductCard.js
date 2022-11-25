@@ -40,9 +40,9 @@ const ProductCard = ({ product }) => {
           <p>{product.originalPrice}</p>
           <p>{product.usageYears}</p>
           {/* <button className="btn btn-primary">Book Now</button> */}
-          <a href="#my-modal-2" className="btn btn-primary">
+          <label htmlFor="my-modal-4" className="btn btn-primary">
             Book Now
-          </a>
+          </label>
         </div>
 
         <div class="mt-4">
