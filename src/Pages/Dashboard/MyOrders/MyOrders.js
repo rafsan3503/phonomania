@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserContext";
 import Loading from "../../Shared/Loading";
@@ -8,24 +8,31 @@ const MyOrders = () => {
   // get user from context
   const { user, logOut } = useContext(AuthContext);
   // get orders
-  const { data: orders = [], isLoading } = useQuery({
-    queryKey: ["orders"],
-    queryFn: () =>
-      fetch(`http://localhost:5000/orders?email=${user?.email}`, {
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      }).then((res) => {
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+      headers: {
+        authorization: localStorage.getItem("token"),
+      },
+    })
+      .then((res) => {
         if (res.status === 401 || res.status === 403) {
           logOut();
         }
         return res.json();
-      }),
-  });
+      })
+      .then((data) => {
+        setOrders(data);
+        setIsLoading(false);
+      });
+  }, [user?.email, logOut]);
   // loader
   if (isLoading) {
     return <Loading />;
   }
+  console.log(orders);
   return (
     <div>
       <div className="mt-16">
@@ -52,7 +59,7 @@ const MyOrders = () => {
                   <td>{order.name}</td>
                   <td>${order.price}</td>
                   <td>
-                    <Link to={`/dashboard/payment/${order._id}`}>
+                    <Link>
                       {order?.paid ? (
                         <button
                           disabled
@@ -61,9 +68,12 @@ const MyOrders = () => {
                           Paid
                         </button>
                       ) : (
-                        <button className="btn btn-xs btn-error text-white">
+                        <Link
+                          to={`/dashboard/payment/${order._id}`}
+                          className="btn btn-xs btn-error text-white"
+                        >
                           Pay
-                        </button>
+                        </Link>
                       )}
                     </Link>
                   </td>

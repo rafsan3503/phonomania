@@ -26,7 +26,7 @@ const Login = () => {
       .then((res) => {
         const user = {
           email: res.user.email,
-          role: "buyer",
+          role: "Buyer",
         };
         fetch("http://localhost:5000/users", {
           method: "POST",
@@ -37,9 +37,12 @@ const Login = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            localStorage.setItem("token", data.token);
-            setLoading(false);
-            navigate(from, { replace: true });
+            console.log(data);
+            if (data.token) {
+              localStorage.setItem("token", data.token);
+              setLoading(false);
+              navigate(from, { replace: true });
+            }
           });
 
         toast.success("Login Success");

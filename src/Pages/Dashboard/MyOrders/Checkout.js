@@ -1,10 +1,12 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../AuthProvider/UserContext";
 import SmallLoading from "../../Shared/SmallLoading";
 
 const Checkout = ({ booking }) => {
   const { _id, price, userName, productId, email } = booking;
+  const { logOut } = useContext(AuthContext);
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -20,12 +22,17 @@ const Checkout = ({ booking }) => {
       },
       body: JSON.stringify({ price }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log(data.clientSecret);
         setClientSecret(data.clientSecret);
       });
-  }, [price]);
+  }, [price, logOut]);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -85,11 +92,17 @@ const Checkout = ({ booking }) => {
       fetch(`http://localhost:5000/payments`, {
         method: "POST",
         headers: {
+          authorization: localStorage.getItem("token"),
           "content-type": "application/json",
         },
         body: JSON.stringify(payment),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 401 || res.status === 403) {
+            logOut();
+          }
+          return res.json();
+        })
         .then((data) => {
           console.log(data);
           setSuccess("Payment Success!!");

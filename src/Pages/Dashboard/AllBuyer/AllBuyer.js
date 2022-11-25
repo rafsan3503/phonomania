@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../../Shared/Loading";
+import { AuthContext } from "../../../AuthProvider/UserContext";
 
 const AllBuyer = () => {
+  // get logout from context
+  const { logOut } = useContext(AuthContext);
   // get buyers using react query
   const {
     data: buyers = [],
@@ -12,7 +15,16 @@ const AllBuyer = () => {
   } = useQuery({
     queryKey: ["buyers"],
     queryFn: () =>
-      fetch("http://localhost:5000/buyers").then((res) => res.json()),
+      fetch("http://localhost:5000/buyers", {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+        }
+        return res.json();
+      }),
   });
   //   delete buyer
   const handleDelete = (buyer) => {
