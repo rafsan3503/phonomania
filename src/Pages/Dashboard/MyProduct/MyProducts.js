@@ -19,6 +19,26 @@ const MyProducts = () => {
       ),
   });
 
+  //   handle advertise with axios
+  const handleAdvertise = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`http://localhost:5000/products/${id}`).then((res) => {
+          console.log(res.data);
+        });
+        Swal.fire("Advertised!", "Your Product is Live now.", "success");
+      }
+    });
+  };
+
   //   handle delete with axios
   const handleDelete = (id) => {
     Swal.fire({
@@ -59,8 +79,15 @@ const MyProducts = () => {
                   <th>{product.name}</th>
                   <td>{product.salesStatus}</td>
                   <td>
-                    <button className="btn btn-secondary btn-xs">
-                      Advertise
+                    <button
+                      onClick={() => handleAdvertise(product._id)}
+                      className={`btn btn-secondary btn-xs ${
+                        product.advertisement && "btn-success text-white"
+                      }`}
+                    >
+                      {product.advertisement
+                        ? "Advertised"
+                        : "Advertise Product"}
                     </button>
                   </td>
                   <td>
