@@ -9,6 +9,7 @@ import AllBuyer from "../Pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../Pages/Dashboard/AllSeller/AllSeller";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import Payments from "../Pages/Dashboard/MyOrders/Payments";
+import MyProducts from "../Pages/Dashboard/MyProduct/MyProducts";
 import CategoriesProduct from "../Pages/Home/CategoriesProduct";
 import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`http://localhost:5000/orders/${params.id}`),
         element: <Payments />,
+      },
+      {
+        path: "/dashboard/myproducts",
+        element: <MyProducts />,
       },
       {
         path: "/dashboard/addproduct",
