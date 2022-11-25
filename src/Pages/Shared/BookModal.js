@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../AuthProvider/UserContext";
 
-const BookModal = ({ product, setOpenModal }) => {
+const BookModal = ({ modalProduct, setModalProduct }) => {
   const { user } = useContext(AuthContext);
   const handleBooking = (event) => {
     event.preventDefault();
@@ -20,8 +20,8 @@ const BookModal = ({ product, setOpenModal }) => {
       email,
       phone,
       location,
-      productImg: product.img,
-      productId: product._id,
+      productImg: modalProduct.img,
+      productId: modalProduct._id,
     };
 
     fetch("http://localhost:5000/orders", {
@@ -34,13 +34,13 @@ const BookModal = ({ product, setOpenModal }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.acknowledged) {
-          setOpenModal(false);
+          setModalProduct(false);
           toast.success("Booking Successful");
           return;
         }
         if (data.error) {
           toast.error(data.message);
-          setOpenModal(false);
+          setModalProduct(null);
         }
       });
   };
@@ -50,12 +50,12 @@ const BookModal = ({ product, setOpenModal }) => {
       <label htmlFor="my-modal-4" className="modal cursor-pointer">
         <label className="modal-box relative" htmlFor="">
           <h3 className="font-bold text-lg">
-            Add information to book {product.name}
+            Add information to book {modalProduct.name}
           </h3>
           <form onSubmit={handleBooking}>
             <input
               type="text"
-              defaultValue={product.name}
+              defaultValue={modalProduct.name}
               disabled
               name="name"
               class="input input-bordered w-full my-3"
@@ -63,7 +63,7 @@ const BookModal = ({ product, setOpenModal }) => {
             <input
               type="text"
               name="price"
-              defaultValue={product.price}
+              defaultValue={modalProduct.price}
               class="input input-bordered w-full my-3"
             />
             <input

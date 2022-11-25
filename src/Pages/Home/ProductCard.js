@@ -5,7 +5,7 @@ import BookModal from "../Shared/BookModal";
 
 const ProductCard = ({ product }) => {
   const [verified, setVerified] = useState(false);
-  const [openModal, setOpenModal] = useState(true);
+  const [modalProduct, setModalProduct] = useState(null);
   useEffect(() => {
     fetch(`http://localhost:5000/verify?email=${product?.sellerEmail}`)
       .then((res) => res.json())
@@ -40,7 +40,11 @@ const ProductCard = ({ product }) => {
           <p>{product.originalPrice}</p>
           <p>{product.usageYears}</p>
           {/* <button className="btn btn-primary">Book Now</button> */}
-          <label htmlFor="my-modal-4" className="btn btn-primary">
+          <label
+            htmlFor="my-modal-4"
+            onClick={() => setModalProduct(product)}
+            className="btn btn-primary"
+          >
             Book Now
           </label>
         </div>
@@ -58,21 +62,24 @@ const ProductCard = ({ product }) => {
                 alt="Avatar"
               />
               {verified && <GoVerified className="text-blue-500" />}
-              <a
+              <Link
                 href="#"
                 class="mx-2 font-semibold text-gray-700 dark:text-gray-200"
                 tabindex="0"
                 role="link"
               >
                 {product.seller}
-              </a>
+              </Link>
             </div>
             <span class="mx-1 text-xs text-gray-600 dark:text-gray-300">
               {product.postTime} {product.postDate}
             </span>
           </div>
-          {openModal && (
-            <BookModal product={product} setOpenModal={setOpenModal} />
+          {modalProduct && (
+            <BookModal
+              modalProduct={modalProduct}
+              setModalProduct={setModalProduct}
+            />
           )}
         </div>
       </div>
