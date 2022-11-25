@@ -50,7 +50,11 @@ const MyOrders = () => {
                   <td>${order.price}</td>
                   <td>
                     <Link to={`/dashboard/payment/${order._id}`}>
-                      <button className="btn btn-xs btn-error">Pay</button>
+                      {order?.paid ? (
+                        <button className="btn btn-xs btn-success">Paid</button>
+                      ) : (
+                        <button className="btn btn-xs btn-error">Pay</button>
+                      )}
                     </Link>
                   </td>
                 </tr>

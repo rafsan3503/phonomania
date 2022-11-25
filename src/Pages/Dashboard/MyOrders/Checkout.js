@@ -1,11 +1,15 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import SmallLoading from "../../Shared/SmallLoading";
 
 const Checkout = ({ booking }) => {
-  const { _id, price, userName, email } = booking;
+  const { _id, price, userName, productId, email } = booking;
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:5000/create-payment-intent", {
@@ -27,6 +31,7 @@ const Checkout = ({ booking }) => {
   const elements = useElements();
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     if (!stripe || !elements) {
       return;
     }
@@ -72,6 +77,7 @@ const Checkout = ({ booking }) => {
         id: paymentIntent.id,
         email,
         userName,
+        productId,
         bookingId: _id,
       };
       fetch(`http://localhost:5000/payments`, {
@@ -84,8 +90,10 @@ const Checkout = ({ booking }) => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          setSuccess("Payment Success!!");
+          setLoading(false);
+          navigate("/dashboard");
         });
-      setSuccess("Payment Success!!");
     }
   };
   return (
@@ -110,9 +118,9 @@ const Checkout = ({ booking }) => {
         <button
           type="submit"
           className="btn btn-secondary text-white btn-sm mt-5"
-          disabled={!stripe || !clientSecret}
+          disabled={!stripe || !clientSecret || loading}
         >
-          Pay
+          {loading ? <SmallLoading /> : "Pay"}
         </button>
       </form>
       <p className="text-red-500 mt-3">{cardError}</p>
