@@ -2,17 +2,21 @@ import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../../AuthProvider/UserContext";
 import { useQuery } from "@tanstack/react-query";
+import SmallLoading from "../../Shared/SmallLoading";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   // get user data
   const { user } = useContext(AuthContext);
 
+  // loader
+  const [loading, setLoading] = useState(false);
+
+  // navigate
+  const navigate = useNavigate();
+
   // get categories
-  const {
-    data: categories = [],
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
       fetch("http://localhost:5000/categories").then((res) => res.json()),
@@ -21,6 +25,7 @@ const AddProduct = () => {
   // product add
   const handleAddProduct = (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target;
     const name = form.name.value;
     const price = form.price.value;
@@ -91,6 +96,8 @@ const AddProduct = () => {
           .then((data) => {
             if (data.acknowledged) {
               toast.success("product added successfully!");
+              setLoading(false);
+              navigate(`/categories/${categoryId}`);
             }
           });
       });
@@ -237,7 +244,7 @@ const AddProduct = () => {
 
         <div className="flex justify-end mt-6">
           <button type="submit" className="btn btn-primary">
-            Add
+            {loading ? <SmallLoading /> : "Add Product"}
           </button>
         </div>
       </form>
