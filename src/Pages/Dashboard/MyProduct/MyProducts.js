@@ -28,11 +28,11 @@ const MyProducts = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Advertise it!",
     }).then((result) => {
       if (result.isConfirmed) {
         axios.put(`http://localhost:5000/products/${id}`).then((res) => {
-          console.log(res.data);
+          refetch();
         });
         Swal.fire("Advertised!", "Your Product is Live now.", "success");
       }

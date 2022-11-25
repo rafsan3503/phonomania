@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { GoVerified } from "react-icons/go";
 import { Link } from "react-router-dom";
 import BookModal from "../Shared/BookModal";
+import { FaFlag } from "react-icons/fa";
+import axios from "axios";
 
 const ProductCard = ({ product }) => {
   const [verified, setVerified] = useState(false);
@@ -16,6 +18,13 @@ const ProductCard = ({ product }) => {
         }
       });
   }, [product?.sellerEmail]);
+
+  // report item
+  const handleReport = (id) => {
+    axios.put(`http://localhost:5000/products/${id}`).then((res) => {
+      console.log(res.data);
+    });
+  };
   return (
     <div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
       <img class="object-cover w-full h-64" src={product.img} alt="Article" />
@@ -25,13 +34,22 @@ const ProductCard = ({ product }) => {
           <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">
             Product
           </span>
-          <Link
-            href="#"
-            class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-300 transform dark:text-white hover:text-gray-600 hover:underline"
-            role="link"
-          >
-            {product.name}
-          </Link>
+          <div className="flex justify-between">
+            <Link
+              href="#"
+              class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-300 transform dark:text-white hover:text-gray-600 hover:underline"
+              role="link"
+            >
+              {product.name}
+            </Link>
+            <div
+              onClick={() => handleReport(product._id)}
+              className="flex items-center gap-4 cursor-pointer"
+            >
+              <FaFlag className="text-red-500" />
+              <small>Report this item</small>
+            </div>
+          </div>
           <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
             {product.description}
           </p>
