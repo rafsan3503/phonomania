@@ -65,15 +65,15 @@ const ReportedItems = () => {
               </tr>
             </thead>
             <tbody>
-              {reportedProducts.map((product) => (
-                <tr>
-                  <th>1</th>
+              {reportedProducts.map((product, idx) => (
+                <tr key={product._id}>
+                  <th>{idx + 1}</th>
                   <td>{product.name}</td>
                   <td>{product.category}</td>
                   <td>
                     <button
                       onClick={() => handleDelete(product._id)}
-                      className="btn btn-xs btn-error"
+                      className="btn btn-xs btn-error text-white"
                     >
                       Delete
                     </button>

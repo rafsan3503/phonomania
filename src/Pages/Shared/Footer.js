@@ -142,7 +142,7 @@ const Footer = () => {
                   href="#"
                   className="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
                 >
-                  Meraki UI
+                  Contact us
                 </Link>
               </div>
 
