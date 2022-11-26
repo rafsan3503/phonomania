@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../../Shared/Loading";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../AuthProvider/UserContext";
 
 const AllSeller = () => {
+  // get logout
+  const { logOut } = useContext(AuthContext);
   // get all seller
   const {
     data: sellers = [],
@@ -13,7 +16,16 @@ const AllSeller = () => {
   } = useQuery({
     queryKey: ["sellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/sellers").then((res) => res.json()),
+      fetch("http://localhost:5000/sellers", {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+        }
+        return res.json();
+      }),
   });
   const handleDelete = (seller) => {
     Swal.fire({
@@ -57,6 +69,7 @@ const AllSeller = () => {
   if (isLoading) {
     return <Loading />;
   }
+  console.log(sellers);
   return (
     <div className="mt-16">
       <div className="overflow-x-auto">

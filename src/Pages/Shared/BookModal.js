@@ -62,41 +62,41 @@ const BookModal = ({ modalProduct, setModalProduct }) => {
               defaultValue={modalProduct.name}
               disabled
               name="name"
-              class="input input-bordered w-full my-3"
+              className="input input-bordered w-full my-3"
             />
             <input
               type="text"
               name="price"
               defaultValue={modalProduct.price}
-              class="input input-bordered w-full my-3"
+              className="input input-bordered w-full my-3"
             />
             <input
               type="text"
               name="userName"
               defaultValue={user.displayName}
               disabled
-              class="input input-bordered w-full my-3"
+              className="input input-bordered w-full my-3"
             />
             <input
               type="text"
               name="email"
               defaultValue={user.email}
               disabled
-              class="input input-bordered w-full my-3"
+              className="input input-bordered w-full my-3"
             />
 
             <input
               type="tel"
               name="phone"
               placeholder="Phone Number"
-              class="input input-bordered w-full my-3"
+              className="input input-bordered w-full my-3"
             />
 
             <input
               type="text"
               name="location"
               placeholder="Location"
-              class="input input-bordered w-full my-3"
+              className="input input-bordered w-full my-3"
             />
 
             <div className="modal-action">

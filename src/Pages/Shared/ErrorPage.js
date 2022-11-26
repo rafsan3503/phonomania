@@ -2,12 +2,12 @@ import React from "react";
 
 const ErrorPage = () => {
   return (
-    <div class="grid h-screen px-4 bg-white place-content-center">
-      <div class="text-center">
+    <div className="grid h-screen px-4 bg-white place-content-center">
+      <div className="text-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 768"
-          class="w-auto h-56 mx-auto text-black sm:h-64"
+          className="w-auto h-56 mx-auto text-black sm:h-64"
         >
           <g fill="none" fill-rule="evenodd">
             <g fill="#FF5678">
@@ -23,11 +23,11 @@ const ErrorPage = () => {
           </g>
         </svg>
 
-        <h1 class="mt-6 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        <h1 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Uh-oh!
         </h1>
 
-        <p class="mt-4 text-gray-500">We can't find that page.</p>
+        <p className="mt-4 text-gray-500">We can't find that page.</p>
       </div>
     </div>
   );

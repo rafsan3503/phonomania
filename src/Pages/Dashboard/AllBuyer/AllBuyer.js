@@ -55,6 +55,7 @@ const AllBuyer = () => {
   if (isLoading) {
     return <Loading />;
   }
+  console.log(buyers);
   return (
     <div className="mt-16">
       <div className="overflow-x-auto">

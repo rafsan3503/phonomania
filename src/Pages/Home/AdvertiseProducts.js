@@ -9,34 +9,42 @@ const AdvertiseProducts = () => {
     queryFn: () =>
       axios.get("http://localhost:5000/advertised").then((res) => res.data),
   });
+  if (advertisedProducts.length <= 0) {
+    return <div></div>;
+  }
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-16">
-      {advertisedProducts.map((product) => (
-        <Link
-          to={`/categories/${product.categoryId}`}
-          class="group relative block bg-black"
-        >
-          <img
-            alt="Featured Product"
-            src={product.img}
-            class="absolute inset-0 h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
-          />
+    <div className="my-16">
+      <h2 className="text-primary text-3xl font-medium text-center my-10">
+        Advertised Products
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {advertisedProducts.map((product) => (
+          <Link
+            to={`/categories/${product.categoryId}`}
+            className="group relative block bg-black rounded shadow-md"
+          >
+            <img
+              alt="Featured Product"
+              src={product.img}
+              className="absolute inset-0 h-full w-full opacity-75 transition-opacity group-hover:opacity-50"
+            />
 
-          <div class="relative p-8">
-            <p class="text-sm font-medium uppercase tracking-widest text-pink-500">
-              Featured
-            </p>
+            <div className="relative p-8">
+              <p className="text-sm font-medium uppercase tracking-widest text-pink-500">
+                Featured
+              </p>
 
-            <p class="text-2xl font-bold text-white">{product.name}</p>
+              <p className="text-2xl font-bold text-white">{product.name}</p>
 
-            <div class="mt-64">
-              <div class="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                <p class="text-sm text-white">{product.description}</p>
+              <div className="mt-64">
+                <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                  <p className="text-sm text-white">{product.description}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
