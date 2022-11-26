@@ -39,7 +39,7 @@ const BookModal = ({ modalProduct, setModalProduct }) => {
         if (data?.acknowledged) {
           setModalProduct(false);
           toast.success("Booking Successful");
-          navigate("/dashboard");
+          navigate("/dashboard/myorders");
           return;
         }
         if (data.error) {

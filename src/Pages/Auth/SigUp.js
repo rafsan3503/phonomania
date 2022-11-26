@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import { AuthContext } from "../../AuthProvider/UserContext";
+import SmallLoading from "../Shared/SmallLoading";
 
 const SigUp = () => {
   // get functions from context
   const { googleLogin, updateUser, twitterLogin, createUser } =
     useContext(AuthContext);
+
+  const [loading, setLoading] = useState(false);
 
   // get location and navigate
   const navigate = useNavigate();
@@ -16,6 +19,7 @@ const SigUp = () => {
   // create user with email and password
   const handleSignup = (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target;
     const name = form.name.value;
     const image = form.image.files[0];
@@ -61,6 +65,7 @@ const SigUp = () => {
                   .then((res) => res.json())
                   .then((data) => {
                     localStorage.setItem("token", data.token);
+                    setLoading(false);
                     navigate(from, { replace: true });
                   });
                 toast.success("User Created successfully");
@@ -143,7 +148,7 @@ const SigUp = () => {
               to="/login/signup"
               className="w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2 border-blue-500 dark:border-blue-400 dark:text-white"
             >
-              sign up
+              Sign Up
             </Link>
           </div>
 
@@ -300,7 +305,7 @@ const SigUp = () => {
 
           <div className="mt-6">
             <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-              Sign Up
+              {!loading ? "Sign Up" : <SmallLoading />}
             </button>
 
             <div className="flex items-center justify-between mt-4">

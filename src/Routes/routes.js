@@ -7,6 +7,7 @@ import SigUp from "../Pages/Auth/SigUp";
 import AddProduct from "../Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyer from "../Pages/Dashboard/AllBuyer/AllBuyer";
 import AllSeller from "../Pages/Dashboard/AllSeller/AllSeller";
+import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import Payments from "../Pages/Dashboard/MyOrders/Payments";
 import MyProducts from "../Pages/Dashboard/MyProduct/MyProducts";
@@ -16,6 +17,7 @@ import Home from "../Pages/Home/Home";
 import Blogs from "../Pages/Others/Blogs";
 import ErrorPage from "../Pages/Shared/ErrorPage";
 import AdminRoutes from "./AdminRoutes";
+import BuyerRoutes from "./BuyerRoutes";
 import PrivateRoutes from "./PrivateRoutes";
 import SellerRoutes from "./SellerRoutes";
 
@@ -74,13 +76,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <MyOrders />,
+        element: <Dashboard />,
+      },
+      {
+        path: "/dashboard/myorders",
+        element: (
+          <BuyerRoutes>
+            <MyOrders />
+          </BuyerRoutes>
+        ),
       },
       {
         path: "/dashboard/payment/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:5000/orders/${params.id}`),
-        element: <Payments />,
+        element: (
+          <BuyerRoutes>
+            <Payments />
+          </BuyerRoutes>
+        ),
       },
       {
         path: "/dashboard/myproducts",
