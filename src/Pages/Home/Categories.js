@@ -31,7 +31,11 @@ const Categories = ({ setModalProduct }) => {
 
           <div className="grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12">
             {categories.map((category) => (
-              <Link to={`/categories/${category._id}`} className="block">
+              <Link
+                key={category._id}
+                to={`/categories/${category._id}`}
+                className="block"
+              >
                 <img
                   alt="Simple Watch"
                   src={category.img}

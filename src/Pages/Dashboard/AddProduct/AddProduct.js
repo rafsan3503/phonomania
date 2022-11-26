@@ -98,8 +98,12 @@ const AddProduct = () => {
             if (data.acknowledged) {
               toast.success("product added successfully!");
               setLoading(false);
-              navigate(`/categories/${categoryId}`);
+              navigate("/dashboard/myproducts");
             }
+          })
+          .catch((err) => {
+            toast.error(err.message);
+            setLoading(false);
           });
       });
   };
@@ -244,7 +248,7 @@ const AddProduct = () => {
         </div>
 
         <div className="flex justify-end mt-6">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary text-white">
             {loading ? <SmallLoading /> : "Add Product"}
           </button>
         </div>

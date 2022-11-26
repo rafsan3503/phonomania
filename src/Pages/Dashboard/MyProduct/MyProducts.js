@@ -80,17 +80,19 @@ const MyProducts = () => {
                   <th>{product.name}</th>
                   <td>{product.salesStatus}</td>
                   <td>
-                    <button
-                      onClick={() => handleAdvertise(product._id)}
-                      disabled={product?.advertisement}
-                      className={`btn btn-secondary btn-xs ${
-                        product.advertisement && "btn-success text-white"
-                      }`}
-                    >
-                      {product?.advertisement
-                        ? "Advertised"
-                        : "Advertise Product"}
-                    </button>
+                    {product.salesStatus === "available" && (
+                      <button
+                        onClick={() => handleAdvertise(product._id)}
+                        disabled={product?.advertisement}
+                        className={`btn btn-secondary btn-xs ${
+                          product.advertisement && "btn-success text-white"
+                        }`}
+                      >
+                        {product?.advertisement
+                          ? "Advertised"
+                          : "Advertise Product"}
+                      </button>
+                    )}
                   </td>
                   <td>
                     <button

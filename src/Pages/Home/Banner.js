@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import banner from "../../Assets/banner (2).gif";
+import { Typewriter } from "react-simple-typewriter";
 
 const Banner = () => {
   return (
@@ -15,7 +16,12 @@ const Banner = () => {
 
         <div className="max-w-lg lg:mx-12 lg:order-2">
           <h1 className="text-3xl font-medium tracking-wide text-primary lg:text-4xl">
-            YOUR TRUST IS OUR SERVICE
+            PHONOMANIA-
+            <Typewriter
+              words={["JOIN", "BUY", "SELL", "ENJOY!"]}
+              cursor
+              cursorStyle="_"
+            />
           </h1>
           <p className="mt-4 text-gray-600 dark:text-gray-300">
             Welcome to Phonomania. Phonomania is currently one of the most

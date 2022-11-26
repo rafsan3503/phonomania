@@ -26,18 +26,55 @@ const ProductCard = ({ product }) => {
     });
   };
   return (
-    <div className="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-      <img
-        className="object-cover w-full h-64"
-        src={product.img}
-        alt="Article"
-      />
+    <div className="overflow-hidden bg-white rounded-lg shadow-md">
+      <div className="flex justify-between p-5">
+        <div className="flex space-x-4">
+          <img
+            className="w-12 h-12 object-cover rounded-full"
+            src={
+              product.sellerImage
+                ? product.sellerImage
+                : "https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png"
+            }
+            alt="Avatar"
+          />
+
+          <div className="flex flex-col space-y-1">
+            <Link
+              href="#"
+              className="font-semibold text-gray-700 flex items-center"
+              tabindex="0"
+              role="link"
+            >
+              {product.seller}{" "}
+              {verified && <GoVerified className="text-blue-500" />}
+            </Link>
+            <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">
+              {product.postTime} {product.postDate}
+            </span>
+          </div>
+        </div>
+
+        <div
+          onClick={() => handleReport(product._id)}
+          className="flex items-center gap-4 cursor-pointer"
+        >
+          <FaFlag className="text-red-500" />
+          <small>Report</small>
+        </div>
+      </div>
+      <img className="w-full" src={product.img} alt="Article" />
 
       <div className="p-6">
         <div>
-          <span className="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">
-            Product
-          </span>
+          <div className="flex justify-between">
+            <span className="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">
+              {product.model}
+            </span>
+            <span className="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">
+              Price: ${product.price}
+            </span>
+          </div>
           <div className="flex justify-between">
             <Link
               href="#"
@@ -46,65 +83,52 @@ const ProductCard = ({ product }) => {
             >
               {product.name}
             </Link>
-            <div
-              onClick={() => handleReport(product._id)}
-              className="flex items-center gap-4 cursor-pointer"
-            >
-              <FaFlag className="text-red-500" />
-              <small>Report this item</small>
-            </div>
           </div>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            {product.description}
-          </p>
-          <p>{product.location}</p>
-          <p>{product.price}</p>
-          <p>{product.originalPrice}</p>
-          <p>{product.usageYears}</p>
+          <div className="my-5">
+            <p>
+              <span className="font-medium text-xl">Description: </span>
+              {product.description}
+            </p>
+          </div>
+          <div className="my-5">
+            <p>
+              <span className="font-medium text-xl">Location: </span>
+              {product.location}
+            </p>
+          </div>
+          <div className="my-5">
+            <p>
+              <span className="font-medium text-xl">Original Price: </span>$
+              {product.originalPrice}
+            </p>
+          </div>
+          <div className="my-5">
+            <p>
+              <span className="font-medium text-xl">Usage Year: </span>
+              {product.usageYears}
+            </p>
+          </div>
+          <div className="my-5">
+            <p>
+              <span className="font-medium text-xl">Condition: </span>
+              {product.condition}
+            </p>
+          </div>
           {/* <button className="btn btn-primary">Book Now</button> */}
           <label
             htmlFor="my-modal-4"
             onClick={() => setModalProduct(product)}
-            className="btn btn-primary"
+            className="btn btn-primary text-white w-full"
           >
             Book Now
           </label>
         </div>
-
-        <div className="mt-4">
-          <div className="flex items-center">
-            <div className="flex items-center">
-              <img
-                className="object-cover h-10 rounded-full"
-                src={
-                  product.sellerImage
-                    ? product.sellerImage
-                    : "https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png"
-                }
-                alt="Avatar"
-              />
-
-              <Link
-                href="#"
-                className="mx-2 font-semibold text-gray-700 flex items-center"
-                tabindex="0"
-                role="link"
-              >
-                {product.seller}{" "}
-                {verified && <GoVerified className="text-blue-500" />}
-              </Link>
-            </div>
-            <span className="mx-1 text-xs text-gray-600 dark:text-gray-300">
-              {product.postTime} {product.postDate}
-            </span>
-          </div>
-          {modalProduct && (
-            <BookModal
-              modalProduct={modalProduct}
-              setModalProduct={setModalProduct}
-            />
-          )}
-        </div>
+        {modalProduct && (
+          <BookModal
+            modalProduct={modalProduct}
+            setModalProduct={setModalProduct}
+          />
+        )}
       </div>
     </div>
   );
