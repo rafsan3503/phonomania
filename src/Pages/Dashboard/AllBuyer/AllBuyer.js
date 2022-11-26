@@ -40,8 +40,16 @@ const AllBuyer = () => {
       if (result.isConfirmed) {
         fetch(`http://localhost:5000/buyers/${buyer._id}`, {
           method: "DELETE",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
         })
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 401 || res.status === 403) {
+              logOut();
+            }
+            return res.json();
+          })
           .then((data) => {
             if (data.deletedCount > 0) {
               Swal.fire("Deleted!", "Buyer has been deleted.", "success");
@@ -55,7 +63,6 @@ const AllBuyer = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(buyers);
   return (
     <div className="mt-16">
       <div className="overflow-x-auto">
@@ -63,21 +70,21 @@ const AllBuyer = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             {buyers.map((buyer) => (
-              <tr>
+              <tr key={buyer._id}>
                 <th>1</th>
                 <td>{buyer.email}</td>
-                <td>Quality Control Specialist</td>
+                <td>{buyer.role}</td>
                 <td>
                   <button
                     onClick={() => handleDelete(buyer)}
-                    className="btn btn-xs btn-error"
+                    className="btn btn-xs btn-error text-white"
                   >
                     Delete
                   </button>

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   // get user data
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   // loader
   const [loading, setLoading] = useState(false);
@@ -83,17 +83,21 @@ const AddProduct = () => {
           postDate: date.toDateString(),
         };
 
-        console.log(product.postTime);
-
         // post product to database
         fetch("http://localhost:5000/products", {
           method: "POST",
           headers: {
+            authorization: localStorage.getItem("token"),
             "content-type": "application/json",
           },
           body: JSON.stringify(product),
         })
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 401 || res.status === 403) {
+              return logOut();
+            }
+            return res.json();
+          })
           .then((data) => {
             if (data.acknowledged) {
               toast.success("product added successfully!");

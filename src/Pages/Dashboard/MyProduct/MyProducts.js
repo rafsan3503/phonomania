@@ -2,21 +2,27 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider/UserContext";
 import axios from "axios";
-import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 const MyProducts = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const {
     data: products = [],
-    isLoading,
+
     refetch,
   } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch(`http://localhost:5000/products?email=${user?.email}`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:5000/products?email=${user?.email}`, {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          return logOut();
+        }
+        return res.json();
+      }),
   });
 
   //   handle advertise with axios
@@ -31,11 +37,24 @@ const MyProducts = () => {
       confirmButtonText: "Yes, Advertise it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`http://localhost:5000/advertised/${id}`).then((res) => {
-          console.log(res.data);
-          refetch();
-        });
-        Swal.fire("Advertised!", "Your Product is Live now.", "success");
+        fetch(`http://localhost:5000/advertised/${id}`, {
+          method: "PUT",
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        })
+          .then((res) => {
+            if (res.status === 401 || res.status === 403) {
+              return logOut();
+            }
+            return res.json();
+          })
+          .then((data) => {
+            if (data.modifiedCount > 0) {
+              Swal.fire("Advertised!", "Your Product is Live now.", "success");
+            }
+            refetch();
+          });
       }
     });
   };
@@ -52,12 +71,28 @@ const MyProducts = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/products/${id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            refetch();
-          }
-        });
-        Swal.fire("Deleted!", "Your product has been deleted.", "success");
+        axios
+          .delete(`http://localhost:5000/products/${id}`, {
+            headers: localStorage.getItem("token"),
+          })
+          .catch((error) => {
+            if (
+              error.response.status === 401 ||
+              error.response.status === 403
+            ) {
+              return logOut();
+            }
+          })
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
+              refetch();
+              Swal.fire(
+                "Deleted!",
+                "Your product has been deleted.",
+                "success"
+              );
+            }
+          });
       }
     });
   };
@@ -76,7 +111,7 @@ const MyProducts = () => {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr>
+                <tr key={product._id}>
                   <th>{product.name}</th>
                   <td>{product.salesStatus}</td>
                   <td>

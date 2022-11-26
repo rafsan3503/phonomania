@@ -40,10 +40,11 @@ const ProductCard = ({ product }) => {
             body: { email: user.email, productId: product._id },
           })
           .then((res) => {
+            console.log(res.data);
             if (res.data.modifiedCount > 0) {
               return Swal.fire("Reported!", "success");
             }
-            if (res.data.message) {
+            if (res.data.error) {
               Swal.fire(res.data.message, "error");
             }
           });
