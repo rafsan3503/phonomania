@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../AuthProvider/UserContext";
 import Loading from "../../Shared/Loading";
 
 const ReportedItems = () => {
+  const { logOut } = useContext(AuthContext);
   const {
     data: reportedProducts = [],
     isLoading,
@@ -12,7 +14,16 @@ const ReportedItems = () => {
   } = useQuery({
     queryKey: ["reported"],
     queryFn: () =>
-      axios.get("http://localhost:5000/reported").then((res) => res.data),
+      fetch("http://localhost:5000/reported", {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      }).then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          logOut();
+        }
+        return res.json();
+      }),
   });
   // delete product
   const handleDelete = (id) => {

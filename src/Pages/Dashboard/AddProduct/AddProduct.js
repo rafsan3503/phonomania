@@ -114,7 +114,7 @@ const AddProduct = () => {
       <form onSubmit={handleAddProduct}>
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="">Name</label>
+            <label htmlhtmlFor="">Name</label>
             <input
               type="text"
               placeholder="Name"
@@ -125,7 +125,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Model</label>
+            <label htmlhtmlFor="">Model</label>
             <input
               type="text"
               required
@@ -136,7 +136,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Price</label>
+            <label htmlhtmlFor="">Price</label>
             <input
               type="text"
               required
@@ -147,7 +147,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Original Price</label>
+            <label htmlhtmlFor="">Original Price</label>
             <input
               type="text"
               required
@@ -158,7 +158,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Year of use</label>
+            <label htmlhtmlFor="">Year of use</label>
             <input
               type="text"
               required
@@ -169,7 +169,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Condition</label>
+            <label htmlhtmlFor="">Condition</label>
             <select
               required
               className="select select-bordered w-full"
@@ -181,7 +181,7 @@ const AddProduct = () => {
             </select>
           </div>
           <div>
-            <label htmlFor="category">Category</label>
+            <label htmlhtmlFor="category">Category</label>
             <select
               required
               className="select select-bordered w-full"
@@ -194,7 +194,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Location</label>
+            <label htmlhtmlFor="">Location</label>
             <input
               type="text"
               required
@@ -205,7 +205,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Phone Number</label>
+            <label htmlhtmlFor="">Phone Number</label>
             <input
               type="tel"
               required
@@ -216,7 +216,7 @@ const AddProduct = () => {
           </div>
 
           <div>
-            <label htmlFor="">Purchase Year</label>
+            <label htmlhtmlFor="">Purchase Year</label>
             <input
               type="date"
               required
@@ -227,7 +227,7 @@ const AddProduct = () => {
           </div>
         </div>
         <div>
-          <label htmlFor="">Photo Url</label>
+          <label htmlhtmlFor="">Photo Url</label>
           <input
             type="file"
             required
@@ -238,7 +238,7 @@ const AddProduct = () => {
           />
         </div>
         <div className="mt-5">
-          <label htmlFor="">Description</label>
+          <label htmlhtmlFor="">Description</label>
           <textarea
             required
             className="textarea textarea-bordered w-full"

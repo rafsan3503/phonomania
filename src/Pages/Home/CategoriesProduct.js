@@ -15,9 +15,7 @@ const CategoriesProduct = () => {
       <p className="my-5">Total Phone: {products.length}</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[60vh] my-16">
         {products.map((product) => (
-          <>
-            <ProductCard product={product} key={product._id} />
-          </>
+          <ProductCard product={product} key={product._id} />
         ))}
       </div>
       <div className="text-center my-10">

@@ -32,7 +32,6 @@ const MyOrders = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(orders);
   return (
     <div>
       <div className="mt-16">
@@ -48,7 +47,7 @@ const MyOrders = () => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr>
+                <tr key={order._id}>
                   <th>
                     <div className="avatar">
                       <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -59,7 +58,7 @@ const MyOrders = () => {
                   <td>{order.name}</td>
                   <td>${order.price}</td>
                   <td>
-                    <Link>
+                    <div>
                       {order?.paid ? (
                         <button
                           disabled
@@ -75,7 +74,7 @@ const MyOrders = () => {
                           Pay
                         </Link>
                       )}
-                    </Link>
+                    </div>
                   </td>
                 </tr>
               ))}

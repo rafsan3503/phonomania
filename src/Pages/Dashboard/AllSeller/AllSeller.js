@@ -90,9 +90,9 @@ const AllSeller = () => {
                 <td>
                   <button
                     onClick={() => handleVerify(seller._id)}
-                    className="btn btn-success btn-xs"
+                    className="btn btn-success btn-xs text-white"
                   >
-                    {seller.verified ? "verified" : "verify"}
+                    {seller.verified ? "verified" : "Unverified"}
                   </button>
                 </td>
                 <td>

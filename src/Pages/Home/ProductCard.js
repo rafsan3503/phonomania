@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoVerified } from "react-icons/go";
 import { Link } from "react-router-dom";
 import BookModal from "../Shared/BookModal";
 import { FaFlag } from "react-icons/fa";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../AuthProvider/UserContext";
+import { data } from "autoprefixer";
 
 const ProductCard = ({ product }) => {
+  const { user } = useContext(AuthContext);
   const [verified, setVerified] = useState(false);
   const [modalProduct, setModalProduct] = useState(null);
   useEffect(() => {
@@ -20,9 +24,30 @@ const ProductCard = ({ product }) => {
   }, [product?.sellerEmail]);
 
   // report item
-  const handleReport = (id) => {
-    axios.put(`http://localhost:5000/products/${id}`).then((res) => {
-      console.log(res.data);
+  const handleReport = (product) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to report this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Report it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`http://localhost:5000/products/${product._id}`, {
+            body: { email: user.email, productId: product._id },
+          })
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              return Swal.fire("Reported!", "success");
+            }
+            if (res.data.message) {
+              Swal.fire(res.data.message, "error");
+            }
+          });
+      }
     });
   };
   return (
@@ -43,7 +68,7 @@ const ProductCard = ({ product }) => {
             <Link
               href="#"
               className="font-semibold text-gray-700 flex items-center"
-              tabindex="0"
+              tabIndex="0"
               role="link"
             >
               {product.seller}{" "}
@@ -55,13 +80,13 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
 
-        <div
-          onClick={() => handleReport(product._id)}
+        <button
+          onClick={() => handleReport(product)}
           className="flex items-center gap-4 cursor-pointer"
         >
           <FaFlag className="text-red-500" />
           <small>Report</small>
-        </div>
+        </button>
       </div>
       <img
         className="w-1/2 h-96 object-cover mx-auto"

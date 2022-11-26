@@ -29,7 +29,6 @@ const Checkout = ({ booking }) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data.clientSecret);
         setClientSecret(data.clientSecret);
       });
   }, [price, logOut]);
@@ -55,7 +54,6 @@ const Checkout = ({ booking }) => {
     });
 
     if (error) {
-      console.log("[error]", error);
       setCardError(error.message);
       setLoading(false);
     } else {
@@ -104,10 +102,9 @@ const Checkout = ({ booking }) => {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
           setSuccess("Payment Success!!");
           setLoading(false);
-          navigate("/dashboard");
+          navigate("/dashboard/myorders");
         });
     }
   };
@@ -135,7 +132,7 @@ const Checkout = ({ booking }) => {
           className="btn btn-primary w-full text-white btn-sm mt-5"
           disabled={!stripe || !clientSecret || loading}
         >
-          {loading ? <SmallLoading /> : "Pay"}
+          {!loading ? "Pay" : <SmallLoading />}
         </button>
       </form>
       <p className="text-red-500 mt-3">{cardError}</p>
