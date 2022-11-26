@@ -73,16 +73,11 @@ const MyProducts = () => {
       if (result.isConfirmed) {
         axios
           .delete(`http://localhost:5000/products/${id}`, {
-            headers: localStorage.getItem("token"),
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
           })
-          .catch((error) => {
-            if (
-              error.response.status === 401 ||
-              error.response.status === 403
-            ) {
-              return logOut();
-            }
-          })
+
           .then((res) => {
             if (res.data.deletedCount > 0) {
               refetch();
