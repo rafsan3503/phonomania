@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import Loading from "../../Shared/Loading";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../../AuthProvider/UserContext";
+import { GoVerified } from "react-icons/go";
 
 const AllSeller = () => {
   // get logout
@@ -105,7 +106,7 @@ const AllSeller = () => {
         <table className="table w-11/12 mx-auto">
           <thead>
             <tr>
-              <th>SL</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Status</th>
               <th>Delete</th>
@@ -114,8 +115,11 @@ const AllSeller = () => {
           <tbody>
             {sellers.map((seller, idx) => (
               <tr key={seller._id}>
-                <th>{idx + 1}</th>
-                <td>{seller.email}</td>
+                <td className="flex items-center">
+                  {seller.name}{" "}
+                  {seller.verified && <GoVerified className="text-blue-500" />}
+                </td>
+                <td>{seller.email} </td>
                 <td>
                   <button
                     onClick={() => handleVerify(seller._id)}

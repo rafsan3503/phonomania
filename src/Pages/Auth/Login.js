@@ -25,6 +25,7 @@ const Login = () => {
     loginUser(email, password)
       .then((res) => {
         const user = {
+          name: res.user.displayName,
           email: res.user.email,
           role: "Buyer",
         };
@@ -57,6 +58,7 @@ const Login = () => {
     setLoading(true);
     googleLogin().then((res) => {
       const user = {
+        name: res.user.displayName,
         email: res.user.email,
         role: "Buyer",
       };

@@ -51,6 +51,7 @@ const SigUp = () => {
             updateUser(name, img)
               .then(() => {
                 const user = {
+                  name,
                   email,
                   role,
                 };
@@ -80,8 +81,9 @@ const SigUp = () => {
     googleLogin()
       .then((res) => {
         const user = {
+          name: res.user.displayName,
           email: res.user.email,
-          role: "buyer",
+          role: "Buyer",
         };
         fetch("https://phonomania-server.vercel.app/users", {
           method: "POST",

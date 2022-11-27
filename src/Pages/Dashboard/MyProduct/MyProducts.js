@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const MyProducts = () => {
   const { user, logOut } = useContext(AuthContext);
+
   const {
     data: products = [],
 

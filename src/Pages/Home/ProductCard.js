@@ -6,10 +6,11 @@ import { FaFlag } from "react-icons/fa";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/UserContext";
-import { data } from "autoprefixer";
+import useBuyer from "../../Hooks/useBuyer";
 
 const ProductCard = ({ product }) => {
   const { user } = useContext(AuthContext);
+  const [isBuyer] = useBuyer(user?.email);
   const [verified, setVerified] = useState(false);
   const [modalProduct, setModalProduct] = useState(null);
   useEffect(() => {
@@ -147,13 +148,15 @@ const ProductCard = ({ product }) => {
             </p>
           </div>
           {/* <button className="btn btn-primary">Book Now</button> */}
-          <label
-            htmlFor="my-modal-4"
-            onClick={() => setModalProduct(product)}
-            className="btn btn-primary text-white w-full"
-          >
-            Book Now
-          </label>
+          {isBuyer && (
+            <label
+              htmlFor="my-modal-4"
+              onClick={() => setModalProduct(product)}
+              className="btn btn-primary text-white w-full"
+            >
+              Book Now
+            </label>
+          )}
         </div>
         {modalProduct && (
           <BookModal
