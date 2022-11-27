@@ -8,8 +8,9 @@ Open website: https://phonomania-64972.web.app
 
 ## Admin email and password
 
-Email: admin@gmail.com
-Password: Admin123##
+adminEmail: <admin@gmail.com>
+
+adminPassword: <Admin123##>
 
 ## Features & Funtionality
 
