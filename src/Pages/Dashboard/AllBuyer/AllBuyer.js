@@ -15,7 +15,7 @@ const AllBuyer = () => {
   } = useQuery({
     queryKey: ["buyers"],
     queryFn: () =>
-      fetch("http://localhost:5000/buyers", {
+      fetch("https://phonomania-server.vercel.app/buyers", {
         headers: {
           authorization: localStorage.getItem("token"),
         },
@@ -38,7 +38,7 @@ const AllBuyer = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/buyers/${buyer._id}`, {
+        fetch(`https://phonomania-server.vercel.app/buyers/${buyer._id}`, {
           method: "DELETE",
           headers: {
             authorization: localStorage.getItem("token"),

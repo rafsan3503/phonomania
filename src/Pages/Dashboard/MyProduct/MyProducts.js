@@ -13,11 +13,14 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch(`http://localhost:5000/products?email=${user?.email}`, {
-        headers: {
-          authorization: localStorage.getItem("token"),
-        },
-      }).then((res) => {
+      fetch(
+        `https://phonomania-server.vercel.app/products?email=${user?.email}`,
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        }
+      ).then((res) => {
         if (res.status === 401 || res.status === 403) {
           return logOut();
         }
@@ -37,7 +40,7 @@ const MyProducts = () => {
       confirmButtonText: "Yes, Advertise it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/advertised/${id}`, {
+        fetch(`https://phonomania-server.vercel.app/advertised/${id}`, {
           method: "PUT",
           headers: {
             authorization: localStorage.getItem("token"),
@@ -72,7 +75,7 @@ const MyProducts = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/products/${id}`, {
+          .delete(`https://phonomania-server.vercel.app/products/${id}`, {
             headers: {
               authorization: localStorage.getItem("token"),
             },

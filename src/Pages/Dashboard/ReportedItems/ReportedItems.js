@@ -14,7 +14,7 @@ const ReportedItems = () => {
   } = useQuery({
     queryKey: ["reported"],
     queryFn: () =>
-      fetch("http://localhost:5000/reported", {
+      fetch("https://phonomania-server.vercel.app/reported", {
         headers: {
           authorization: localStorage.getItem("token"),
         },
@@ -37,11 +37,13 @@ const ReportedItems = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/products/${id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            refetch();
-          }
-        });
+        axios
+          .delete(`https://phonomania-server.vercel.app/products/${id}`)
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
+              refetch();
+            }
+          });
         Swal.fire("Deleted!", "Your product has been deleted.", "success");
       }
     });

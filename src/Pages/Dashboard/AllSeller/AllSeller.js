@@ -16,7 +16,7 @@ const AllSeller = () => {
   } = useQuery({
     queryKey: ["sellers"],
     queryFn: () =>
-      fetch("http://localhost:5000/sellers", {
+      fetch("https://phonomania-server.vercel.app/sellers", {
         headers: {
           authorization: localStorage.getItem("token"),
         },
@@ -38,7 +38,7 @@ const AllSeller = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/sellers/${seller._id}`, {
+        fetch(`https://phonomania-server.vercel.app/sellers/${seller._id}`, {
           method: "DELETE",
           headers: {
             authorization: localStorage.getItem("token"),
@@ -72,7 +72,7 @@ const AllSeller = () => {
       confirmButtonText: "Yes, Verify!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/sellers/${_id}`, {
+        fetch(`https://phonomania-server.vercel.app/sellers/${_id}`, {
           method: "PUT",
           headers: {
             authorization: localStorage.getItem("token"),

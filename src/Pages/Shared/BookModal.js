@@ -27,7 +27,7 @@ const BookModal = ({ modalProduct, setModalProduct }) => {
       productId: modalProduct._id,
     };
 
-    fetch("http://localhost:5000/orders", {
+    fetch("https://phonomania-server.vercel.app/orders", {
       method: "Post",
       headers: {
         "content-type": "application/json",

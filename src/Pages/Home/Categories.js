@@ -11,7 +11,9 @@ const Categories = ({ setModalProduct }) => {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch("http://localhost:5000/categories").then((res) => res.json()),
+      fetch("https://phonomania-server.vercel.app/categories").then((res) =>
+        res.json()
+      ),
   });
   return (
     <section className="my-16">

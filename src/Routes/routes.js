@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       {
         path: "/categories/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(`https://phonomania-server.vercel.app/categories/${params.id}`),
         element: (
           <PrivateRoutes>
             <CategoriesProduct></CategoriesProduct>
@@ -89,7 +89,7 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/payment/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/orders/${params.id}`),
+          fetch(`https://phonomania-server.vercel.app/orders/${params.id}`),
         element: (
           <BuyerRoutes>
             <Payments />

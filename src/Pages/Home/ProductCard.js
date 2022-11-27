@@ -13,7 +13,9 @@ const ProductCard = ({ product }) => {
   const [verified, setVerified] = useState(false);
   const [modalProduct, setModalProduct] = useState(null);
   useEffect(() => {
-    fetch(`http://localhost:5000/verify?email=${product?.sellerEmail}`)
+    fetch(
+      `https://phonomania-server.vercel.app/verify?email=${product?.sellerEmail}`
+    )
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
@@ -36,7 +38,7 @@ const ProductCard = ({ product }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .put(`http://localhost:5000/products/${product._id}`, {
+          .put(`https://phonomania-server.vercel.app/products/${product._id}`, {
             body: { email: user.email, productId: product._id },
           })
           .then((res) => {

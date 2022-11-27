@@ -28,7 +28,7 @@ const Login = () => {
           email: res.user.email,
           role: "Buyer",
         };
-        fetch("http://localhost:5000/users", {
+        fetch("https://phonomania-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -61,7 +61,7 @@ const Login = () => {
         role: "Buyer",
       };
 
-      fetch("http://localhost:5000/users", {
+      fetch("https://phonomania-server.vercel.app/users", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -88,7 +88,7 @@ const Login = () => {
   //       role: "Buyer",
   //     };
 
-  //     fetch("http://localhost:5000/users", {
+  //     fetch("https://phonomania-server.vercel.app/users", {
   //       method: "POST",
   //       headers: {
   //         "content-type": "application/json",

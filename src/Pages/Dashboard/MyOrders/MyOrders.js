@@ -12,7 +12,7 @@ const MyOrders = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+    fetch(`https://phonomania-server.vercel.app/orders?email=${user?.email}`, {
       headers: {
         authorization: localStorage.getItem("token"),
       },

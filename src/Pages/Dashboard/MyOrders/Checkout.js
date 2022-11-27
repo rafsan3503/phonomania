@@ -14,7 +14,7 @@ const Checkout = ({ booking }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://phonomania-server.vercel.app/create-payment-intent", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -87,7 +87,7 @@ const Checkout = ({ booking }) => {
         productId,
         bookingId: _id,
       };
-      fetch(`http://localhost:5000/payments`, {
+      fetch(`https://phonomania-server.vercel.app/payments`, {
         method: "POST",
         headers: {
           authorization: localStorage.getItem("token"),

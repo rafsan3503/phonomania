@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Phonomania
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Second hand smartphones Buy/Sell Website
 
-## Available Scripts
+# Live Site Link
 
-In the project directory, you can run:
+Open website: https://phonomania-64972.web.app
 
-### `npm start`
+## Admin email and password
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Email: admin@gmail.com
+Password: Admin123##
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features & Funtionality
 
-### `npm test`
+- Admin , Seller and Buyer Role
+- Admin can verify seller and delete seller,buyer and reported product
+- Seller can add product, advertise and delete product
+- Buyer can book product , report product and pay after booking
+- Different route and api for admin, seller and buyer
+- Animated header,navbar login and sign up page
+- Responsive navbar
+- Beautiful footer
+- Home Section with review and newsletter
+- user log in status
+- Firebase Authentication
+- Google and Email log in
+- Private Routes for safety
+- Blog Sections
+- Error Page
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies
 
-### `npm run build`
+- Firebase
+- React query
+- Axios
+- React Router Dom
+- React hot toast
+- Tailwind
+- Hyper Ui
+- Mamba UI
+- Meraki Ui
+- React typewriter
+- Kit Wind
+- React Icon
+- Sweet Alert
+- JWT token
+- MongoDb
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API Reference
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Get all categories
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```http
+  https://phonomania-server.vercel.app/categories
+```
 
-### `npm run eject`
+#### Get advertised products
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```http
+  https://phonomania-server.vercel.app/advertised
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Other APIs are protected by admin,seller and buyer
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Feedback
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you have any feedback, please reach out to us at rafsanchowdhuryrudro@gmail.com

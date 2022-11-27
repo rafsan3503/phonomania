@@ -54,7 +54,7 @@ const SigUp = () => {
                   email,
                   role,
                 };
-                fetch("http://localhost:5000/users", {
+                fetch("https://phonomania-server.vercel.app/users", {
                   method: "POST",
                   headers: {
                     "content-type": "application/json",
@@ -83,7 +83,7 @@ const SigUp = () => {
           email: res.user.email,
           role: "buyer",
         };
-        fetch("http://localhost:5000/users", {
+        fetch("https://phonomania-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -109,7 +109,7 @@ const SigUp = () => {
   //         email,
   //         role: "buyer",
   //       };
-  //       fetch("http://localhost:5000/users", {
+  //       fetch("https://phonomania-server.vercel.app/users", {
   //         method: "POST",
   //         headers: {
   //           "content-type": "application/json",

@@ -7,7 +7,9 @@ const AdvertiseProducts = () => {
   const { data: advertisedProducts = [] } = useQuery({
     queryKey: ["advertised"],
     queryFn: () =>
-      axios.get("http://localhost:5000/advertised").then((res) => res.data),
+      axios
+        .get("https://phonomania-server.vercel.app/advertised")
+        .then((res) => res.data),
   });
   if (advertisedProducts.length <= 0) {
     return <div></div>;
