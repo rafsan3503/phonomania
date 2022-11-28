@@ -92,11 +92,7 @@ const ProductCard = ({ product }) => {
           <small>Report</small>
         </button>
       </div>
-      <img
-        className="w-1/2 h-96 object-cover mx-auto"
-        src={product.img}
-        alt="Article"
-      />
+      <img className="w-1/2 mx-auto" src={product.img} alt="Article" />
 
       <div className="p-6">
         <div>

@@ -23,7 +23,7 @@ const AllSeller = () => {
         },
       }).then((res) => {
         if (res.status === 401 || res.status === 403) {
-          logOut();
+          return logOut();
         }
         return res.json();
       }),
@@ -128,7 +128,7 @@ const AllSeller = () => {
                       seller.verified ? "btn-success" : "btn-error"
                     } btn-xs text-white`}
                   >
-                    {seller.verified ? "verified" : "Unverified"}
+                    {seller.verified ? "Verify" : "Unverified"}
                   </button>
                 </td>
                 <td>

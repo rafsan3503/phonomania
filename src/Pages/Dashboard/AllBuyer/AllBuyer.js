@@ -21,7 +21,7 @@ const AllBuyer = () => {
         },
       }).then((res) => {
         if (res.status === 401 || res.status === 403) {
-          logOut();
+          return logOut();
         }
         return res.json();
       }),
@@ -76,9 +76,9 @@ const AllBuyer = () => {
             </tr>
           </thead>
           <tbody>
-            {buyers.map((buyer) => (
+            {buyers.map((buyer, idx) => (
               <tr key={buyer._id}>
-                <th>1</th>
+                <th>{idx + 1}</th>
                 <td>{buyer.email}</td>
                 <td>{buyer.role}</td>
                 <td>

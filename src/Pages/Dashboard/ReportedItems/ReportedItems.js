@@ -10,6 +10,7 @@ const ReportedItems = () => {
   const {
     data: reportedProducts = [],
     isLoading,
+
     refetch,
   } = useQuery({
     queryKey: ["reported"],
@@ -19,12 +20,14 @@ const ReportedItems = () => {
           authorization: localStorage.getItem("token"),
         },
       }).then((res) => {
+        console.log(res.status);
         if (res.status === 401 || res.status === 403) {
-          logOut();
+          return logOut();
         }
         return res.json();
       }),
   });
+
   // delete product
   const handleDelete = (id) => {
     Swal.fire({
@@ -38,8 +41,15 @@ const ReportedItems = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://phonomania-server.vercel.app/products/${id}`)
+          .delete(`https://phonomania-server.vercel.app/products/${id}`, {
+            headers: {
+              authorization: localStorage.getItem("token"),
+            },
+          })
           .then((res) => {
+            if (res.status === 401 || res.status === 403) {
+              return logOut();
+            }
             if (res.data.deletedCount > 0) {
               refetch();
             }
@@ -67,7 +77,7 @@ const ReportedItems = () => {
               </tr>
             </thead>
             <tbody>
-              {reportedProducts.map((product, idx) => (
+              {reportedProducts?.map((product, idx) => (
                 <tr key={product._id}>
                   <th>{idx + 1}</th>
                   <td>{product.name}</td>

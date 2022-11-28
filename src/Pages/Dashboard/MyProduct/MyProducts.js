@@ -104,6 +104,7 @@ const MyProducts = () => {
               <tr>
                 <th>Name</th>
                 <th>Sales Status</th>
+                <th>Price</th>
                 <th>Advertise</th>
                 <th>Delete</th>
               </tr>
@@ -113,6 +114,7 @@ const MyProducts = () => {
                 <tr key={product._id}>
                   <th>{product.name}</th>
                   <td>{product.salesStatus}</td>
+                  <td>${product.price}</td>
                   <td>
                     {product.salesStatus === "available" && (
                       <button

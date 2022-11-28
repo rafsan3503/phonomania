@@ -5,6 +5,7 @@ import useAdmin from "../Hooks/useAdmin";
 import useBuyer from "../Hooks/useBuyer";
 import useSeller from "../Hooks/useSeller";
 import Navbar from "../Pages/Shared/Navbar";
+import { MdMenuOpen } from "react-icons/md";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
@@ -14,7 +15,15 @@ const DashboardLayout = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar>
+        <label
+          htmlFor="my-drawer-2"
+          tabIndex={1}
+          className="btn btn-ghost lg:hidden"
+        >
+          <MdMenuOpen className="text-xl text-primary" />
+        </label>
+      </Navbar>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content bg-slate-200 rounded-lg shadow-md shadow-primary">
@@ -22,7 +31,6 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-
           <ul className="menu p-4 w-80 bg-base-100 text-base-content">
             {isBuyer && (
               <li>

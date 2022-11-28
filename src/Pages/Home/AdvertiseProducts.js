@@ -24,12 +24,12 @@ const AdvertiseProducts = () => {
           <Link
             key={product._id}
             to={`/categories/${product.categoryId}`}
-            className="group relative block bg-neutral rounded-lg overflow-hidden shadow-md"
+            className="group relative block bg-black rounded-lg overflow-hidden shadow-md shadow-primary"
           >
             <img
               alt="Featured Product"
               src={product.img}
-              className="absolute inset-0 w-full mx-auto object-cover opacity-75 transition-opacity group-hover:opacity-50"
+              className="absolute inset-0 max-w-full h-full mx-auto opacity-75 transition-opacity group-hover:opacity-50"
             />
 
             <div className="relative p-8">

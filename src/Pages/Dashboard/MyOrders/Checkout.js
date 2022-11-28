@@ -1,6 +1,7 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../AuthProvider/UserContext";
 import SmallLoading from "../../Shared/SmallLoading";
 
@@ -11,7 +12,9 @@ const Checkout = ({ booking }) => {
   const [success, setSuccess] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [paymentId, setPaymentId] = useState("");
+  // const navigate = useNavigate();
+  const [payment, setPayment] = useState(false);
 
   useEffect(() => {
     fetch("https://phonomania-server.vercel.app/create-payment-intent", {
@@ -24,7 +27,7 @@ const Checkout = ({ booking }) => {
     })
       .then((res) => {
         if (res.status === 401 || res.status === 403) {
-          logOut();
+          return logOut();
         }
         return res.json();
       })
@@ -59,6 +62,7 @@ const Checkout = ({ booking }) => {
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       setCardError("");
+      setPaymentId(paymentMethod.id);
     }
 
     const { paymentIntent, error: confirmError } =
@@ -102,9 +106,12 @@ const Checkout = ({ booking }) => {
           return res.json();
         })
         .then((data) => {
+          console.log(data);
+          toast.success("Payment Success!!");
           setSuccess("Payment Success!!");
           setLoading(false);
-          navigate("/dashboard/myorders");
+          setPayment(true);
+          // navigate("/dashboard/myorders");
         });
     }
   };
@@ -127,16 +134,28 @@ const Checkout = ({ booking }) => {
             },
           }}
         />
-        <button
-          type="submit"
-          className="btn btn-primary w-full text-white btn-sm mt-5"
-          disabled={!stripe || !clientSecret || loading}
-        >
-          {!loading ? "Pay" : <SmallLoading />}
-        </button>
+        {payment ? (
+          <Link
+            className="btn btn-primary w-full text-white btn-sm mt-5"
+            to="/dashboard/myorders"
+          >
+            Go to my orders
+          </Link>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-primary w-full text-white btn-sm mt-5"
+            disabled={!stripe || !clientSecret || loading}
+          >
+            {!loading ? "Pay" : <SmallLoading />}
+          </button>
+        )}
       </form>
       <p className="text-red-500 mt-3">{cardError}</p>
       <p className="text-green-500 mt-3">{success}</p>
+      {success && (
+        <p className="text-green-500 mt-3">Payment Id: {paymentId}</p>
+      )}
     </div>
   );
 };
